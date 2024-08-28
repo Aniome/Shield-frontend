@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Домашняя страница</title>
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
-    <script src="/static/ts/login.ts"></script>
+    <link rel="icon" type="image/x-icon" href="../../static/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../../static/css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.7.5/dist/axios.min.js"></script>
+    <script type="module" src="../../static/ts/login.js"></script>
 </head>
 <body>
 <div id="container" class="container">
     <div class="form-container sign-up-container">
-        <form action="localhost:8080/register" method="POST">
+        <form id="sign-up-form">
             <h1>Создать аккаунт</h1>
             <input type="text" placeholder="Имя пользователя" id="username" required/>
             <div style="color:red"></div>
@@ -22,13 +23,13 @@
         </form>
     </div>
     <div class="form-container sign-in-container">
-        <form action="localhost:8080/" method="POST">
+        <form id="sign-in-form">
             <h1>Войти</h1>
             <label>Имя пользователя:</label>
             <input type="text" placeholder="Имя пользователя" name="username" required/>
             <input type="password" placeholder="Пароль" name="password" required/>
             <!--<div style="color: red;">Неверное имя пользователя или пароль</div>-->
-            <button>Войти</button>
+            <button type="submit">Войти</button>
             <a href="/register" methods="GET">Регистрация</a>
         </form>
     </div>
