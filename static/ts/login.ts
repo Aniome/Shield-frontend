@@ -1,6 +1,27 @@
-import axios from 'axios';
+import axios from 'axios-typescript';
 
 window.onload = () => {
+
+    axios({
+        method: 'post',
+        mode: 'no-cors',
+        url: 'http://localhost:8080/login',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: {
+            username: 'test123',
+            password: 'test123'
+        }
+    }).then(function (response) {
+        // обработка успешного запроса
+        console.log(response);
+    })
+        .catch(function (error) {
+            // обработка ошибки
+            console.log(error);
+        });
+
     const signUpButton: HTMLElement | null = document.getElementById('signUp');
     const signInButton: HTMLElement | null = document.getElementById('signIn');
     const container: HTMLElement | null = document.getElementById('container');
@@ -16,18 +37,41 @@ window.onload = () => {
 
     signInForm?.addEventListener('submit', function (event: SubmitEvent): void {
         event.preventDefault();
-        axios.post('http://localhost:8080/login?username=test123&password=test123', {
-            name: 'John Doe',
-            age: 30
+
+        const url = 'http://localhost:8080/login';
+        //const data = JSON.stringify({ name: 'Иван', age: 30 });
+
+        fetch(url, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Connection': 'keep-alive'
+            },
+            body: JSON.stringify({
+                "username": "test123",
+                "password": "test123"
+            })
         })
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-        //sendPostRequest("http://localhost:8080/login?username=test123&password=test123", "")
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response.status);
+                    //throw new Error('Ошибка при отправке запроса');
+                }
+                return response;
+            })
+            .then(data => {
+                console.log('Успешно отправлено:', data);
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+
     });
 
 
     async function sendPostRequest(myUrl: RequestInfo | URL, content: any) {
-        const response:Response = await fetch(myUrl, {
+        const response: Response = await fetch(myUrl, {
             mode: 'no-cors',
             method: 'POST',
             body: content,
@@ -51,3 +95,5 @@ window.onload = () => {
         }
     }
 }
+
+//"start": "live-server --port=8079 --cors --no-browser",
